@@ -22,7 +22,9 @@ public class Ostacoli {
     /** Il primo ostacolo non rotto che tocca l'area; null se non ce n'è nessuno. */
     public Ostacolo ostacoloCheTocca(Rettangolo area) {
         for (Ostacolo o : ostacoli) {
-            if (!o.isRotto() && o.getArea().tocca(area)) return o;
+            if (!o.isRotto() && o.getArea().tocca(area)) {
+                return o;
+            };
         }
         return null;
     }
@@ -36,7 +38,11 @@ public class Ostacoli {
      *           esplosione a catena, non viene colpito di nuovo.
      */
     public void colpisciAttorno(Rettangolo zona) {
-        // scrivete qui
+        for (Ostacolo o : ostacoli) {
+            if (!o.isRotto() && o.getArea().tocca(zona)) {
+                o.colpisci(this);
+            }
+        }
     }
 
     /** Un passo del gioco per tutti gli ostacoli: quelli che si muovono si spostano. */

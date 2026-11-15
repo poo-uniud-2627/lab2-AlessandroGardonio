@@ -22,7 +22,7 @@ public class OstacoloEsplosivo implements Ostacolo {
     public static final Color COLORE = new Color(235, 90, 40);
 
     private final Rettangolo area;
-    // scrivete qui gli altri campi che vi servono
+    private boolean rotto;
 
     /** Pretende: area non è null. Promette: un ostacolo esplosivo non rotto. */
     public OstacoloEsplosivo(Rettangolo area) {
@@ -30,7 +30,9 @@ public class OstacoloEsplosivo implements Ostacolo {
     }
 
     @Override
-    public Rettangolo getArea() { return area; }
+    public Rettangolo getArea(){
+        return area;
+    }
 
     /**
      * Oltre al contratto di Ostacolo: il primo colpo lo rompe, e quando si rompe l'ostacolo
@@ -38,18 +40,23 @@ public class OstacoloEsplosivo implements Ostacolo {
      */
     @Override
     public void colpisci(Ostacoli campo) {
-        // scrivete qui
+        if (rotto == true) {
+            throw new IllegalStateException("Non puoi rompere questo ostacolo, perché è già rotto");
+        } else {
+            rotto = true;
+            campo.colpisciAttorno(area.allargato(PORTATA));
+        }
     }
 
     @Override
     public boolean isRotto() {
-        return false; // scrivete qui
+        return rotto;
     }
 
     /** Promette: COLORE, anche da rotto. */
     @Override
     public Color getColore() {
-        return null; // scrivete qui
+        return COLORE;
     }
 
     @Override
